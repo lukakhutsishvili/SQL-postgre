@@ -15,3 +15,5 @@ export const createTable = async () => {
     "CREATE TABLE IF NOT EXISTS customer(id SERIAL PRIMARY KEY, name TEXT, password TEXT)"
   );
 };
+
+export default pool;
