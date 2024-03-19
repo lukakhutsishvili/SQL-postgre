@@ -1,5 +1,6 @@
 import express from "express";
 import pool, { createTable } from "./config/sql.js";
+import bodyParser from "body-parser";
 
 const app = express();
 
@@ -10,7 +11,8 @@ async function init() {
   } catch (error) {}
 
   function serverStart() {
-    app.get("/", async (_, res) => {
+    app.use(bodyParser.json());
+    app.get("/get", async (_, res) => {
       try {
         const resultQuery = await pool.query("SELECT * FROM customer");
         const rows = resultQuery.rows;
@@ -18,6 +20,15 @@ async function init() {
       } catch (error) {
         return res.status(401).json(error);
       }
+    });
+    app.post("/post", async (req, res) => {
+      const { name, password } = req.body;
+      const resultQuery = await pool.query(
+        "INSERT INTO customer(name, password) VALUES($1, $2)",
+        [name, password]
+      );
+      const rows = resultQuery.rows;
+      return res.status(201).json(rows);
     });
     app.listen(3000);
   }
