@@ -9,12 +9,14 @@ async function init() {
   try {
     await createTable();
     serverStart();
-  } catch (error) {}
+  } catch (error) {
+    console.log(error);
+  }
 
   function serverStart() {
     app.use(bodyParser.json());
     app.use(cors());
-    app.get("/get", async (_, res) => {
+    app.get("/", async (_, res) => {
       try {
         const resultQuery = await pool.query("SELECT * FROM customer");
         const rows = resultQuery.rows;
@@ -23,7 +25,7 @@ async function init() {
         return res.status(401).json(error);
       }
     });
-    app.post("/post", async (req, res) => {
+    app.post("/", async (req, res) => {
       const { name, password } = req.body;
       const resultQuery = await pool.query(
         "INSERT INTO customer(name, password) VALUES($1, $2)",
