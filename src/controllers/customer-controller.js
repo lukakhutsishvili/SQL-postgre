@@ -15,7 +15,7 @@ export const addCustomers = async (req, res) => {
     const { name, mail, cartype, password } = req.body;
     console.log(req.body);
     const resultQuery = await pool.query(
-      "INSERT INTO customer(name, mail, cartype, password) VALUES($1,$2,$3,$4)",
+      "INSERT INTO customer(name, mail, cartype, password) VALUES($1, $2, $3, $4)",
       [name, mail, cartype, password]
     );
     const rows = resultQuery.rows;
