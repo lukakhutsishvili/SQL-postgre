@@ -1,4 +1,4 @@
-import pool from "../config/sql";
+import pool from "../config/sql.js";
 
 export const getAllCustomers = async (_, res) => {
   try {
