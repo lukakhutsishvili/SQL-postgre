@@ -12,10 +12,10 @@ export const getAllCustomers = async (_, res) => {
 
 export const addCustomers = async (req, res) => {
   try {
-    const { name, password, mail, cartype } = req.body;
+    const { name, mail, cartype, password } = req.body;
     const resultQuery = await pool.query(
-      "INSERT INTO customer(name, password, mail, cartype) VALUES($1, $2,$3,$4)",
-      [name, password, mail, cartype]
+      "INSERT INTO customer(name, mail, cartype, password) VALUES($1, $2,$3,$4)",
+      [name, mail, cartype, password]
     );
     const rows = resultQuery.rows;
     return res.status(201).json(rows);
